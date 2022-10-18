@@ -23,5 +23,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //parse application/json
 app.use(bodyParser.json());
 
+//static files
+app.use(express.static('public'));
+
+//templating engine - syntax for exphbs changed to reflect update(.create method)
+const handlebars = exphbs.create({ extname: '.hbs' });
+app.engine('.hbs', handlebars.engine);
+app.set('view engine', '.hbs');
+
+//router
+app.get('', (req, res) => {
+  res.render('home');
+});
+
 //listen to the port
 app.listen(port, () => console.log(`Listening on port ${port}`));
